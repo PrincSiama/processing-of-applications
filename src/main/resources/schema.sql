@@ -26,5 +26,6 @@ role varchar(15) not null unique
                                             -- USERS_ROLES
 create table if not exists users_roles (
 user_id int not null references users(id) on delete cascade,
-role_id int not null references roles(id) on delete cascade
+role_id int not null references roles(id) on delete cascade,
+unique (user_id, role_id)
 );

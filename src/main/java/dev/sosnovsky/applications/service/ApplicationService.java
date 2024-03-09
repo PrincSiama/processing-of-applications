@@ -4,7 +4,6 @@ import dev.sosnovsky.applications.dto.CreateApplicationDto;
 import dev.sosnovsky.applications.model.Application;
 import dev.sosnovsky.applications.model.Sort;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 

@@ -17,6 +17,10 @@ import java.util.List;
 public class ApplicationController {
     private final ApplicationService applicationService;
 
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello!";
+    }
     // User
     @PostMapping
     public Application createApplication(@RequestBody @Valid CreateApplicationDto createApplicationDto) {
