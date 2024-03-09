@@ -1,7 +1,6 @@
 package dev.sosnovsky.applications.service;
 
 import dev.sosnovsky.applications.config.UserDetailsImpl;
-import dev.sosnovsky.applications.exception.NotFoundException;
 import dev.sosnovsky.applications.model.User;
 import dev.sosnovsky.applications.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -23,6 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByPhoneNumber(username);
         return user.map(UserDetailsImpl::new)
-                .orElseThrow(() -> new NotFoundException("Пользователь с номером телефона " + username + " не найден"));
+                .orElseThrow(() -> new UsernameNotFoundException(
+                        "Пользователь с номером телефона " + username + " не найден"));
     }
 }

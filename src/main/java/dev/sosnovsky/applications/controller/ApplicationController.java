@@ -7,7 +7,7 @@ import dev.sosnovsky.applications.service.ApplicationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,34 +19,26 @@ import java.util.List;
 public class ApplicationController {
     private final ApplicationService applicationService;
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello!";
-    }
-
     // User
     @PostMapping
-    public Application createApplication(@RequestBody @Valid CreateApplicationDto createApplicationDto) {
-        return applicationService.create(createApplicationDto);
+    public Application createApplication(@RequestBody @Valid CreateApplicationDto createApplicationDto,
+                                         @AuthenticationPrincipal UserDetails userDetails) {
+        return applicationService.create(createApplicationDto, userDetails);
     }
 
     // User
     @PutMapping("/{applicationId}")
     public Application updateApplication(@PathVariable int applicationId,
-                                         @RequestBody @Valid CreateApplicationDto createApplicationDto) {
-    /*int userId =
-                (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();*/
-        int userId = 1;
-        return applicationService.update(applicationId, userId, createApplicationDto);
+                                         @RequestBody @Valid CreateApplicationDto createApplicationDto,
+                                         @AuthenticationPrincipal UserDetails userDetails) {
+        return applicationService.update(applicationId, createApplicationDto, userDetails);
     }
 
     // User
     @PutMapping("/{applicationId}/send")
-    public Application sendApplication(@PathVariable int applicationId) {
-        /*int userId =
-                (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();*/
-        int userId = 1;
-        return applicationService.send(applicationId, userId);
+    public Application sendApplication(@PathVariable int applicationId,
+                                       @AuthenticationPrincipal UserDetails userDetails) {
+        return applicationService.send(applicationId, userDetails);
     }
 
   /*  @GetMapping("/{applicationId}")
@@ -72,11 +64,9 @@ public class ApplicationController {
     public List<Application> getUserApplications(
             @RequestParam(value = "sort", required = false) Sort sort,
             @RequestParam(value = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(value = "size", required = false, defaultValue = "5") int size) {
-        /*int userId =
-                (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();*/
-        int userId = 1;
-        return applicationService.getUserApplications(userId, sort, PageRequest.of(page, size));
+            @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        return applicationService.getUserApplications(sort, PageRequest.of(page, size), userDetails);
     }
 
     // Operator - с фильтрацией по имени пользователя
@@ -87,7 +77,6 @@ public class ApplicationController {
             @RequestParam(value = "sort", required = false) Sort sort,
             @RequestParam(value = "page", required = false, defaultValue = "0") int page,
             @RequestParam(value = "size", required = false, defaultValue = "5") int size) {
-
         return applicationService.getSentApplications(findText, sort, PageRequest.of(page, size));
     }
 

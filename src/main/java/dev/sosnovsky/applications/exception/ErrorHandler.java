@@ -1,6 +1,7 @@
 package dev.sosnovsky.applications.exception;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -16,7 +17,15 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleRoleAlreadyExistsException(RoleAlreadyExistsException e) {
         e.printStackTrace();
-        return new ErrorResponse("Роль уже назначена", e.getMessage());
+        return new ErrorResponse("Ошибка назначения роли", e.getMessage());
+    }
+
+    // todo поймать ошибку валидации данных MethodArgumentNotValidException
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        e.printStackTrace();
+        return new ErrorResponse("Ошибка валидации данных", e.getMessage());
     }
 
     @ExceptionHandler
