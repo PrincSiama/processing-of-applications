@@ -7,6 +7,8 @@ import dev.sosnovsky.applications.service.ApplicationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,13 +23,11 @@ public class ApplicationController {
     public String hello() {
         return "Hello!";
     }
+
     // User
     @PostMapping
     public Application createApplication(@RequestBody @Valid CreateApplicationDto createApplicationDto) {
-    /*int userId =
-                (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();*/
-        int userId = 1;
-        return applicationService.create(userId, createApplicationDto);
+        return applicationService.create(createApplicationDto);
     }
 
     // User

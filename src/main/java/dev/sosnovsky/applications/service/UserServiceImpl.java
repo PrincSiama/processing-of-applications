@@ -31,12 +31,12 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
                         "Невозможно установить роль оператора пользователю с id = " + id + ". Пользователь не найден"));
-        if (!user.getRole().contains(Role.OPERATOR)) {
+        /*if (!user.getRole().contains(Role.OPERATOR)) {
             user.getRole().add(Role.OPERATOR);
             user.getRole().remove(Role.USER);
         } else {
             throw new RoleAlreadyExistsException("У пользователя с id = " + id + " уже имеется роль " + Role.OPERATOR);
-        }
+        }*/
         userRepository.save(user);
         return mapper.map(user, UserDto.class);
     }

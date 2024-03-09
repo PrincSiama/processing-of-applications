@@ -13,13 +13,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
+
     @Column(name = "phone_number")
     private String phoneNumber;
-    private String password;
-//    @OneToMany
-//    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private Set<Role> role;
 
+    private String password;
+
+    /*@Enumerated(EnumType.STRING)
+    @CollectionTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"))
+//    @Column(name = "role_id")
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<Role> role;*/
+    private String role;
 }

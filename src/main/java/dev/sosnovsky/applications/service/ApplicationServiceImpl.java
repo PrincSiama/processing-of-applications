@@ -7,27 +7,39 @@ import dev.sosnovsky.applications.exception.StatusException;
 import dev.sosnovsky.applications.model.Application;
 import dev.sosnovsky.applications.model.Sort;
 import dev.sosnovsky.applications.model.StatusOfApplications;
+import dev.sosnovsky.applications.model.User;
 import dev.sosnovsky.applications.repository.ApplicationRepository;
+import dev.sosnovsky.applications.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationRepository applicationRepository;
+    private final UserRepository userRepository;
     private final ModelMapper mapper;
 
     @Override
-    public Application create(int userId, CreateApplicationDto createApplicationDto) {
+    public Application create(CreateApplicationDto createApplicationDto) {
+        UserDetails userDetails =
+                (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findByPhoneNumber(userDetails.getUsername())
+                .orElseThrow(() -> new NotFoundException("Пользователь с номером телефона " + userDetails.getUsername()
+                        + " не найден"));
+
         Application application = mapper.map(createApplicationDto, Application.class);
         application.setStatus(StatusOfApplications.DRAFT);
-        application.setCreatorsId(userId);
+        application.setCreatorsId(user.getId());
         application.setCreateDate(LocalDateTime.now());
         return applicationRepository.save(application);
     }
@@ -62,6 +74,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     public Application accept(int applicationId) {
         Application application = applicationRepository.findById(applicationId).orElseThrow(
                 () -> new NotFoundException("Заявка с id = " + applicationId + " не найдена"));
+        // todo одобрить или отклонить можно только заявку со статусом SENT. добавить проверку
         if (application.getStatus().equals(StatusOfApplications.ACCEPTED)) {
             throw new StatusException(
                     "У заявки с id = " + applicationId + " уже установлен статус " + StatusOfApplications.ACCEPTED);
