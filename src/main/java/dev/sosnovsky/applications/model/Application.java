@@ -24,8 +24,6 @@ public class Application {
     private int creatorsId;
 
     @Enumerated(EnumType.STRING)
-    @PrimaryKeyJoinColumn(name = "status")
-    @Column(name = "status")
     private StatusOfApplications status;
 
     @Column(name = "create_date")

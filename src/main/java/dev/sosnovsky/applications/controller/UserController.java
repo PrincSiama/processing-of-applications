@@ -14,7 +14,6 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    // Administrator
     @GetMapping
     public List<UserDto> getUsers(
             @RequestParam(value = "page", required = false, defaultValue = "0") int page,
@@ -22,22 +21,22 @@ public class UserController {
         return userService.getUsers(PageRequest.of(page, size));
     }
 
-    // Administrator
-    @PutMapping("/{userId}/setRole")
+    @PutMapping("/{userId}/set-role")
     public UserDto setOperatorRole(@PathVariable int userId) {
         return userService.setOperatorRole(userId);
     }
 
     // User, Operator, Administrator
-    @PutMapping("/{userId}/logIn")
-    public void logIn() {
+    /*@PutMapping("/login")
+    // выдать токен
+    public void login() {
 
-    }
+    }*/
 
     // User, Operator, Administrator
-    @PutMapping("/{userId}/logOut")
+   /* @PutMapping("/logout")
     public void logOut() {
 
-    }
+    }*/
 
 }

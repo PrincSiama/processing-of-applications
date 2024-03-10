@@ -1,6 +1,5 @@
 package dev.sosnovsky.applications.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,10 +20,9 @@ public class User {
 
     private String password;
 
-    /*@Enumerated(EnumType.STRING)
-    @CollectionTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"))
-//    @Column(name = "role_id")
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<Role> role;*/
-    private String role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+    joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<Role> role;
 }

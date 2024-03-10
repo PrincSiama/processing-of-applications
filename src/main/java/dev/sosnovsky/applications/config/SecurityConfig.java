@@ -31,7 +31,9 @@ public class SecurityConfig {
                 .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/logout").authenticated());
+                        .requestMatchers("/logout").authenticated()
+                        .anyRequest().authenticated());
+
         return httpSecurity.build();
     }
 

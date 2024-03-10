@@ -2,8 +2,7 @@ package dev.sosnovsky.applications.service;
 
 import dev.sosnovsky.applications.dto.CreateApplicationDto;
 import dev.sosnovsky.applications.model.Application;
-import dev.sosnovsky.applications.model.Sort;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
@@ -19,8 +18,7 @@ public interface ApplicationService {
 
     Application reject(int id);
 
-    List<Application> getUserApplications(Sort sort, Pageable pageable, UserDetails userDetails);
+    List<Application> getUserApplications(int page, int size, Sort.Direction sort, UserDetails userDetails);
 
-    List<Application> getSentApplications(String findText, Sort sort, Pageable pageable);
-    Integer getUserIdFromUserDetails(UserDetails userDetails);
+    List<Application> getSentApplications(String findText, int page, int size, Sort.Direction sort);
 }

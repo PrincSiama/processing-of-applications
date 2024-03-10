@@ -1,14 +1,13 @@
 package dev.sosnovsky.applications.config;
 
+import dev.sosnovsky.applications.model.Role;
 import dev.sosnovsky.applications.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class UserDetailsImpl implements UserDetails {
     public User user;
@@ -18,13 +17,13 @@ public class UserDetailsImpl implements UserDetails {
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        /*return user.getRole().stream()
-                .map(Enum::name)
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());*/
-        return Stream.of(user.getRole())
+        return user.getRole().stream()
+                .map(Role::getName)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
+        /*return Stream.of(user.getRole())
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());*/
     }
 
     @Override

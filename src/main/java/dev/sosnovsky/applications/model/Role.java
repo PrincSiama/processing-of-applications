@@ -1,23 +1,14 @@
 package dev.sosnovsky.applications.model;
 
-import lombok.ToString;
-
-@ToString
-public enum Role {
-    USER,
-    OPERATOR,
-    ADMINISTRATOR
-    /*USER("user"),
-    OPERATOR("operator"),
-    ADMINISTRATOR("administrator");
-
-    private final String name;
-
-    private Role(String name) {
-        this.name = name;
-    }
-
-    public boolean equalRole(String otherRole) {
-        return name.equals(otherRole);
-    }*/
+import jakarta.persistence.*;
+import lombok.Data;
+@Data
+@Entity
+@Table(name = "roles")
+public class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "role")
+    private String name;
 }
