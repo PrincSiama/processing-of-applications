@@ -53,6 +53,12 @@
 
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>${jsonwebtoken.version}</version>
+		</dependency>
+
+		<!--<dependency>
+			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
 			<version>${jsonwebtoken.version}</version>
 		</dependency>
@@ -73,7 +79,7 @@
 			<groupId>jakarta.xml.bind</groupId>
 			<artifactId>jakarta.xml.bind-api</artifactId>
 			<version>${jakarta.xml.bind-api.version}</version>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -96,6 +102,13 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.10.2</version>
+			<scope>test</scope>
+		</dependency>
+
 
 	</dependencies>
 
@@ -115,15 +128,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-
-			<!--<plugin>
-				<groupId>org.liquibase</groupId>
-				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>${liquibase.version}</version>
-				&lt;!&ndash;<configuration>
-					<propertyFile>src/main/resources/db/changelog/liquibase.properties</propertyFile>
-				</configuration>&ndash;&gt;
-			</plugin>-->
 		</plugins>
 	</build>
 

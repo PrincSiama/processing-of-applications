@@ -1,3 +1,4 @@
+/*
 package dev.sosnovsky.applications.Jwt;
 
 import dev.sosnovsky.applications.exception.NotFoundException;
@@ -7,7 +8,6 @@ import io.jsonwebtoken.Claims;
 import jakarta.security.auth.message.AuthException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -72,3 +72,4 @@ public class AuthService {
     }
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package dev.sosnovsky.applications.Jwt;
 
 import dev.sosnovsky.applications.model.User;
@@ -82,3 +83,4 @@ public class JwtProvider {
                 .getPayload();
     }
 }
+*/

@@ -1,11 +1,9 @@
-/*
-package dev.sosnovsky.applications.Jwt;
+package dev.sosnovsky.applications.JWTaccess;
 
 import lombok.Data;
 
 @Data
 public class JwtRequest {
-    private String login;
+    private String userName;
     private String password;
 }
-*/

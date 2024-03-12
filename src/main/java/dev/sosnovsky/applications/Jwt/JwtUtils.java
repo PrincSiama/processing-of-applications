@@ -1,3 +1,4 @@
+/*
 package dev.sosnovsky.applications.Jwt;
 
 import dev.sosnovsky.applications.model.Role;
@@ -24,3 +25,4 @@ public class JwtUtils {
                 .collect(Collectors.toSet());
     }
 }
+*/

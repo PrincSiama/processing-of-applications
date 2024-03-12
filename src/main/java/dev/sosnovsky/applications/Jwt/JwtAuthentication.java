@@ -1,3 +1,4 @@
+/*
 package dev.sosnovsky.applications.Jwt;
 
 import dev.sosnovsky.applications.model.Role;
@@ -55,3 +56,4 @@ public class JwtAuthentication implements Authentication {
         return name;
     }
 }
+*/

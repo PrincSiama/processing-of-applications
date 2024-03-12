@@ -1,3 +1,4 @@
+/*
 package dev.sosnovsky.applications.Jwt;
 
 import lombok.AllArgsConstructor;
@@ -10,3 +11,4 @@ public class JwtResponse {
     private String accessToken;
     private String refreshToken;
 }
+*/

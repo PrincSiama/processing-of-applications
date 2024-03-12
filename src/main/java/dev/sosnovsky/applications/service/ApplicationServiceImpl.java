@@ -129,7 +129,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     private Integer getUserIdFromUserDetails(UserDetails userDetails) {
         String phoneNumber = userDetails.getUsername();
-        User user = userRepository.findByPhoneNumber(phoneNumber)
+        User user = userRepository.findAllByPhoneNumber(phoneNumber)
                 .orElseThrow(() -> new NotFoundException("Пользователь с номером телефона " + phoneNumber
                         + " не найден"));
         return user.getId();

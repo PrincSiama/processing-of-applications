@@ -1,6 +1,7 @@
 package dev.sosnovsky.applications.exception;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -42,5 +43,19 @@ public class ErrorHandler {
     public ErrorResponse handleStatusException(StatusException e) {
         e.printStackTrace();
         return new ErrorResponse("Ошибка при изменении статуса", e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleLoginOrPasswordException(LoginOrPasswordException e) {
+        e.printStackTrace();
+        return new ErrorResponse("Некорректные данные", e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleTokenException(TokenException e) {
+        e.printStackTrace();
+        return new ErrorResponse("Токен некорректен", e.getMessage());
     }
 }

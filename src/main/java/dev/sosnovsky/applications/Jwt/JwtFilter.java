@@ -1,3 +1,4 @@
+/*
 package dev.sosnovsky.applications.Jwt;
 
 import io.jsonwebtoken.Claims;
@@ -36,3 +37,4 @@ public class JwtFilter extends GenericFilterBean {
         return null;
     }
 }
+*/

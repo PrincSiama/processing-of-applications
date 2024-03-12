@@ -2,7 +2,6 @@ package dev.sosnovsky.applications.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.repository.cdi.Eager;
 
 import java.util.Set;
 

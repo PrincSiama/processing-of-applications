@@ -1,3 +1,4 @@
+/*
 package dev.sosnovsky.applications.Jwt;
 
 import lombok.Data;
@@ -6,3 +7,4 @@ import lombok.Data;
 public class RefreshJwtRequest {
     public String refreshToken;
 }
+*/

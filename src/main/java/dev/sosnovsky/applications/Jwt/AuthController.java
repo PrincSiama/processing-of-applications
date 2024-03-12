@@ -1,3 +1,4 @@
+/*
 package dev.sosnovsky.applications.Jwt;
 
 import jakarta.security.auth.message.AuthException;
@@ -32,3 +33,4 @@ public class AuthController {
         return ResponseEntity.ok(token);
     }
 }
+*/
