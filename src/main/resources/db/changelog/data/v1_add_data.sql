@@ -2,7 +2,7 @@
 
 -- changeset liquibase:2
 
-/*INSERT INTO users ("name", phone_number, "password") VALUES
+INSERT INTO users ("name", phone_number, "password") VALUES
 ('name1', '+71234567890', '$2a$10$NAktC/XBl.16hEtLkkdkyuwcTUqbjhHaLelARpHF8hVrVFk16zuse'),
 ('name2', '+72345678901', '$2a$10$Po2HH9.sTUBU4C0tHNBoMushYE9kVI6JE05PfYHvD1dtU8nkqBr0O'),
 ('name3', '+73456789012', '$2a$10$U5zf8XHwhWa0B3CCMRBNp.a.8tBsoxPVSfkzsVsLEYqcrC6RYC826'),
@@ -17,7 +17,7 @@ INSERT INTO users_roles (user_id, role) VALUES
 ('4', 'OPERATOR'),
 ('5', 'OPERATOR'),
 ('5', 'ADMINISTRATOR')
-ON CONFLICT DO NOTHING;*/
+ON CONFLICT DO NOTHING;
 
 /*INSERT INTO roles (role) VALUES
 ('USER'),
