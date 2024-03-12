@@ -119,7 +119,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     @PreAuthorize("hasAuthority('OPERATOR')")
     public List<Application> getSentApplications(String text, int page, int size, Sort.Direction sort) {
         List<Application> sentApplicationsList =
-                applicationRepository.sentApplications(text,
+                applicationRepository.findAllByStatusAndNameContainsIgnoreCase(StatusOfApplications.SENT, text,
                         PageRequest.of(page, size, Sort.by(sort, "createDate")));
         if (sentApplicationsList.isEmpty()) {
             throw new NotFoundException("Заявки со статусом " + StatusOfApplications.SENT + " отсутствуют");

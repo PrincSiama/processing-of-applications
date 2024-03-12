@@ -58,7 +58,7 @@ public class ApplicationController {
 
     @GetMapping("/sent")
     public List<Application> getSentApplications(
-            @RequestParam(value = "text", required = false) String text,
+            @RequestParam(value = "text", required = false, defaultValue = "") String text,
             @RequestParam(value = "sort", required = false, defaultValue = "DESC") Sort.Direction sort,
             @RequestParam(value = "page", required = false, defaultValue = "0") int page,
             @RequestParam(value = "size", required = false, defaultValue = "5") int size) {

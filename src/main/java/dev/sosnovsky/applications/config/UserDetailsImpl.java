@@ -15,15 +15,13 @@ public class UserDetailsImpl implements UserDetails {
     public UserDetailsImpl(User user) {
         this.user = user;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return user.getRole().stream()
-                .map(Role::getName)
+                .map(Role::name)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-        /*return Stream.of(user.getRole())
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());*/
     }
 
     @Override

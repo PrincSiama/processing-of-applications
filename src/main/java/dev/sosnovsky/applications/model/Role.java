@@ -1,8 +1,11 @@
 package dev.sosnovsky.applications.model;
 
-import jakarta.persistence.*;
-import lombok.Data;
-@Data
+public enum Role {
+    USER,
+    OPERATOR,
+    ADMINISTRATOR
+
+/*@Data
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -10,5 +13,5 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "role")
-    private String name;
+    private String name;*/
 }

@@ -3,6 +3,7 @@ package dev.sosnovsky.applications.service;
 import dev.sosnovsky.applications.dto.UserDto;
 import dev.sosnovsky.applications.exception.NotFoundException;
 import dev.sosnovsky.applications.exception.RoleAlreadyExistsException;
+import dev.sosnovsky.applications.model.Role;
 import dev.sosnovsky.applications.model.User;
 import dev.sosnovsky.applications.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -33,10 +34,10 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
                         "Невозможно установить роль оператора пользователю с id = " + id + ". Пользователь не найден"));
-        if (user.getRole().stream().noneMatch(role -> role.getName().equals("OPERATOR"))) {
-            //todo установка роли
-      /*      user.getRole().add(new Role());
-            user.getRole().remove(Role.USER);*/
+
+        if (user.getRole().stream().noneMatch(role -> role.equals(Role.OPERATOR))) {
+            user.getRole().add(Role.OPERATOR);
+            user.getRole().remove(Role.USER);
         } else {
             throw new RoleAlreadyExistsException("У пользователя с id = " + id + " уже имеется роль OPERATOR");
         }

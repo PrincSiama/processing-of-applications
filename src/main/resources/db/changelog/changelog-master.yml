@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: dev.sosnovsky
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            path: v1/create_table_v1.sql
+            relativeToChangelogFile: true
+      id: 2
+      runOnChange: true
+      author: dev.sosnovsky
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            path: data/add_data_v1.sql
+            relativeToChangelogFile: true

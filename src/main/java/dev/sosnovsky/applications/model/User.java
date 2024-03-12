@@ -2,6 +2,7 @@ package dev.sosnovsky.applications.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.repository.cdi.Eager;
 
 import java.util.Set;
 
@@ -20,9 +21,13 @@ public class User {
 
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    /*@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
     joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))*/
+    @ElementCollection//(targetClass = Role.class)
+    @CollectionTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private Set<Role> role;
 }
