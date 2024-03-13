@@ -1,21 +1,32 @@
 package dev.sosnovsky.applications.JWTaccess;
 
+import dev.sosnovsky.applications.model.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.encrypt.AesBytesEncryptor;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
+import java.security.Signature;
+import java.security.interfaces.DSAKey;
+import java.security.spec.EncodedKeySpec;
+import java.security.spec.InvalidKeySpecException;
 import java.time.Duration;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static io.jsonwebtoken.Jwts.SIG.HS256;
 
 @Component
 @AllArgsConstructor
@@ -24,7 +35,19 @@ public class JwtTokenUtils {
     private final String secret = "applicationsapplicationsmoreapplications";
 
 //    @Value("${jwt.access.lifetime}")
-    private final Duration jwtLifeTime = Duration.ofMinutes(5);
+    private final Duration jwtLifeTime = Duration.ofMinutes(60);
+
+    private final SecretKey key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    // "AES" or "RSA"
+//    private final SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "AES");
+
+   /* SecretKey key = generateKey(256);
+
+    public static SecretKey generateKey(int n) throws NoSuchAlgorithmException {
+        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+        keyGenerator.init(n);
+        return keyGenerator.generateKey();
+    }*/
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
@@ -40,7 +63,7 @@ public class JwtTokenUtils {
                 .subject(userDetails.getUsername())
                 .issuedAt(issuedDate)
                 .expiration(expiredDate)
-                .signWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
+                .signWith(key)
                 .compact();
     }
 
@@ -60,7 +83,7 @@ public class JwtTokenUtils {
 
     public Claims getClaimsFromToken(@NotNull String token) {
         return Jwts.parser()
-                .verifyWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
+                .verifyWith(key)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();

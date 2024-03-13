@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public List<UserDto> getUsers(Pageable pageable) {
-        return userRepository.findAll().stream()
+        return userRepository.findAll(pageable).stream()
                 .map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
     }
 
