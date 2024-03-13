@@ -1,12 +1,10 @@
 package dev.sosnovsky.applications.config;
 
-import dev.sosnovsky.applications.JWTaccess.JwtAuthEntryPoint;
 import dev.sosnovsky.applications.JWTaccess.JwtRequestFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,7 +18,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -32,23 +29,19 @@ public class SecurityConfig {
     private UserDetailsService userDetailsService;
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
-    @Autowired
-    private JwtAuthEntryPoint jwtAuthEntryPoint;
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
-//                .httpBasic(Customizer.withDefaults())
-//                .formLogin(Customizer.withDefaults())
-
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/user/login")
+                        .permitAll())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/login", "/user/token").permitAll()
-//                        .requestMatchers("user/logout").authenticated()
                         .anyRequest().authenticated())
-//                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .exceptionHandling(ex -> ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.FORBIDDEN)));
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 

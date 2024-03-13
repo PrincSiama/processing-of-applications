@@ -1,7 +1,6 @@
 package dev.sosnovsky.applications.repository;
 
 import dev.sosnovsky.applications.dto.CreateApplicationDto;
-import dev.sosnovsky.applications.exception.NotFoundException;
 import dev.sosnovsky.applications.model.Application;
 import dev.sosnovsky.applications.model.StatusOfApplications;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +14,8 @@ import org.springframework.data.domain.Sort;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 public class ApplicationRepositoryTest {
@@ -26,7 +26,7 @@ public class ApplicationRepositoryTest {
     @Test
     @DisplayName("Поиск заявок по номеру id создателя")
     public void findAllByCreatorsIdTest() {
-        int creatorsId = 84;
+        int creatorsId = 3;
         int page = 0;
         int size = 2;
 
@@ -67,12 +67,11 @@ public class ApplicationRepositoryTest {
         List<Application> testList3 = applicationRepository.findAllByCreatorsId(
                 creatorsId, PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "createDate")));
 
-        assertEquals(createApplicationDto2.getPhoneNumber(), testList2.get(1).getPhoneNumber());
+        assertEquals(createApplicationDto2.getPhoneNumber(), testList2.get(0).getPhoneNumber());
 
-        assertThrows(NotFoundException.class, () -> {
-            applicationRepository.findAllByCreatorsId(
-                    1892, PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "createDate")));
-        });
+        assertTrue(applicationRepository.findAllByCreatorsId(
+                    1892, PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "createDate")))
+                .isEmpty());
     }
 
     @Test
@@ -80,12 +79,12 @@ public class ApplicationRepositoryTest {
     public void findAllByStatusAndNameContainsIgnoreCaseTest() {
         StatusOfApplications status = StatusOfApplications.SENT;
         String text = "";
-        int creatorsId = 63;
+        int creatorsId = 3;
         int page = 0;
         int size = 2;
 
         List<Application> testList = applicationRepository
-                .findAllByStatusAndNameContainsIgnoreCase(status, text,
+                .findAllByStatusInAndNameContainsIgnoreCase(List.of(status), text,
                         PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createDate")));
         assertTrue(testList.isEmpty());
 
@@ -99,7 +98,7 @@ public class ApplicationRepositoryTest {
         applicationRepository.save(application1);
 
         List<Application> testList1 = applicationRepository
-                .findAllByStatusAndNameContainsIgnoreCase(status, text,
+                .findAllByStatusInAndNameContainsIgnoreCase(List.of(status), text,
                         PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createDate")));
 
         assertEquals(1, testList1.size());
@@ -115,7 +114,7 @@ public class ApplicationRepositoryTest {
         applicationRepository.save(application2);
 
         List<Application> testList2 = applicationRepository
-                .findAllByStatusAndNameContainsIgnoreCase(status, text,
+                .findAllByStatusInAndNameContainsIgnoreCase(List.of(status), text,
                         PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createDate")));
 
         assertEquals(1, testList2.size());
@@ -123,7 +122,7 @@ public class ApplicationRepositoryTest {
         applicationRepository.save(application2);
 
         testList2 = applicationRepository
-                .findAllByStatusAndNameContainsIgnoreCase(status, text,
+                .findAllByStatusInAndNameContainsIgnoreCase(List.of(status), text,
                         PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createDate")));
         assertEquals(2, testList2.size());
         assertEquals(createApplicationDto2.getPhoneNumber(), testList2.get(0).getPhoneNumber());
@@ -139,7 +138,7 @@ public class ApplicationRepositoryTest {
         text = "Hn";
 
         List<Application> testList3 = applicationRepository
-                .findAllByStatusAndNameContainsIgnoreCase(status, text,
+                .findAllByStatusInAndNameContainsIgnoreCase(List.of(status), text,
                         PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createDate")));
         assertEquals(1, testList3.size());
         assertEquals(createApplicationDto3.getPhoneNumber(), testList3.get(0).getPhoneNumber());

@@ -1,0 +1,848 @@
+{
+	"info": {
+		"_postman_id": "5d1e2f4b-f3b1-49c0-9e2a-21265311b1ff",
+		"name": "Processing of Applications",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28174809"
+	},
+	"item": [
+		{
+			"name": "User1 create app",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUpI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM0NjU2MSwiZXhwIjoxNzEwMzQ2NjIxfQ.krLM2CzigKCOPmt_Wa3elS9LQjXmPW4UfQsRV_6bKnw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"user1 description\",\r\n    \"name\": \"user1\",\r\n    \"phoneNumber\": \"+79154561246\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/application",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 auth",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"+71234567890\",\r\n    \"password\": \"password1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 refresh",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIrNzEyMzQ1Njc4OTAiLCJpYXQiOjE3MTAzNTE4MjksImV4cCI6MTcxMjk0MzgyOX0.AXepQxyoQUKVopWgi7N68spn4VQn3D6ILENqPYzOs0g\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 logout",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 update app1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM1MjU4OCwiZXhwIjoxNzEwMzUyODg4fQ.YqfybMJzz85H3jjMc2sEyuVsx3zZr50ctDQfqAhFE7I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"user1 update description\",\r\n    \"name\": \"user1\",\r\n    \"phoneNumber\": \"+79154561246\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/application/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 send app1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM1MTgyOSwiZXhwIjoxNzEwMzUyMTI5fQ.QsgVafE4THt7oFOQeyYwwXKVUBtv4J1RiMg5FyFC8p4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/application/10/send",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application",
+						"10",
+						"send"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 send app2",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password1",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "+71234567890",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/application/2/send",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application",
+						"2",
+						"send"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 update app2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM1MjU4OCwiZXhwIjoxNzEwMzUyODg4fQ.YqfybMJzz85H3jjMc2sEyuVsx3zZr50ctDQfqAhFE7I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"user1 update description\",\r\n    \"name\": \"user1\",\r\n    \"phoneNumber\": \"+79154561246\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/application/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2 create app",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM1MjU4OCwiZXhwIjoxNzEwMzUyODg4fQ.YqfybMJzz85H3jjMc2sEyuVsx3zZr50ctDQfqAhFE7I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"user2 description\",\r\n    \"name\": \"user2\",\r\n    \"phoneNumber\": \"+79154538246\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/application",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2 accept app",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM1MjU4OCwiZXhwIjoxNzEwMzUyODg4fQ.YqfybMJzz85H3jjMc2sEyuVsx3zZr50ctDQfqAhFE7I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/application/1/assept",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application",
+						"1",
+						"assept"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Operator auth",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIrNzQ1Njc4OTAxMjMiLCJpYXQiOjE3MTAzNTE1OTgsImV4cCI6MTcxMjk0MzU5OH0.-thp4X-D9WFO3SsBFn1gL8KJroHjDMaqE73jAMezZVs\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Operator create app",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJPUEVSQVRPUiJdLCJzdWIiOiIrNzQ1Njc4OTAxMjMiLCJpYXQiOjE3MTAzNTE1OTgsImV4cCI6MTcxMDM1MTg5OH0.3euHkGP7hgEq9cZWyQE-YL2P6XPNEg7XtpW1neNCQJs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"oper description\",\r\n    \"name\": \"oper\",\r\n    \"phoneNumber\": \"+79154538666\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/application",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Operator accept app1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJBRE1JTklTVFJBVE9SIiwiT1BFUkFUT1IiXSwic3ViIjoiKzc1Njc4OTAxMjM0IiwiaWF0IjoxNzEwMzUxOTY1LCJleHAiOjE3MTAzNTIyNjV9.N4Cb4m37AuksW3ANB_kf6Slm35dUy3roZvec4jmzAiw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/application/5/accept",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application",
+						"5",
+						"accept"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Operator reject app2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJBRE1JTklTVFJBVE9SIiwiT1BFUkFUT1IiXSwic3ViIjoiKzc1Njc4OTAxMjM0IiwiaWF0IjoxNzEwMzUxOTY1LCJleHAiOjE3MTAzNTIyNjV9.N4Cb4m37AuksW3ANB_kf6Slm35dUy3roZvec4jmzAiw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/application/6/reject",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application",
+						"6",
+						"reject"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Operator accept app15",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "+74567890123",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/application/15/accept",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application",
+						"15",
+						"accept"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin auth",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"+75678901234\",\r\n    \"password\": \"password5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin create app",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJBRE1JTklTVFJBVE9SIiwiT1BFUkFUT1IiXSwic3ViIjoiKzc1Njc4OTAxMjM0IiwiaWF0IjoxNzEwMzUxOTY1LCJleHAiOjE3MTAzNTIyNjV9.N4Cb4m37AuksW3ANB_kf6Slm35dUy3roZvec4jmzAiw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"admin description\",\r\n    \"name\": \"admin\",\r\n    \"phoneNumber\": \"+79154538116\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/application",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user1 get app",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM1MzY4NCwiZXhwIjoxNzEwMzUzOTg0fQ.xtrP-OwDE4kh-fa84jbjtfMm1uMch60nY63Nn9Iy_Xk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/application?size=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "5"
+						},
+						{
+							"key": "sort",
+							"value": "ASC",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user1 get sent app",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM1MzY4NCwiZXhwIjoxNzEwMzUzOTg0fQ.xtrP-OwDE4kh-fa84jbjtfMm1uMch60nY63Nn9Iy_Xk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/application/sent",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application",
+						"sent"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Operator get sent app",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJPUEVSQVRPUiJdLCJzdWIiOiIrNzQ1Njc4OTAxMjMiLCJpYXQiOjE3MTAzNTIzMTAsImV4cCI6MTcxMDM1MjYxMH0.oMY4l5qLj3RYF00g8-MJX36Pz4joVc5kYwq6639L6vc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/application/sent",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application",
+						"sent"
+					],
+					"query": [
+						{
+							"key": "text",
+							"value": "UsEr",
+							"disabled": true
+						},
+						{
+							"key": "sort",
+							"value": "ASC",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin get users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJBRE1JTklTVFJBVE9SIiwiT1BFUkFUT1IiXSwic3ViIjoiKzc1Njc4OTAxMjM0IiwiaWF0IjoxNzEwMzUxOTY1LCJleHAiOjE3MTAzNTIyNjV9.N4Cb4m37AuksW3ANB_kf6Slm35dUy3roZvec4jmzAiw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin set role operator for user3",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJBRE1JTklTVFJBVE9SIiwiT1BFUkFUT1IiXSwic3ViIjoiKzc1Njc4OTAxMjM0IiwiaWF0IjoxNzEwMzQxMzU3LCJleHAiOjE3MTAzNDQ5NTd9.eZMAGsI1TwP6cB7Z4Q37nx7bCvh3a3EEBwj6ZVTiaHU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/3/set-role",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"3",
+						"set-role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin get app",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJBRE1JTklTVFJBVE9SIiwiT1BFUkFUT1IiXSwic3ViIjoiKzc1Njc4OTAxMjM0IiwiaWF0IjoxNzEwMzU2Mjk4LCJleHAiOjE3MTAzNTY1OTh9.jNgpSuijG6olI-FYTuvaWaoE-KwSuGnNlh1CAUd64jY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/application/all?status=REJECTED&sort=ASC",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application",
+						"all"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "REJECTED"
+						},
+						{
+							"key": "text",
+							"value": "uS",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "size",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "sort",
+							"value": "ASC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user1 get users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM1MzY4NCwiZXhwIjoxNzEwMzUzOTg0fQ.xtrP-OwDE4kh-fa84jbjtfMm1uMch60nY63Nn9Iy_Xk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080/"
+		}
+	]
+}

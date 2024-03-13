@@ -26,6 +26,8 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationRepository applicationRepository;
     private final UserRepository userRepository;
     private final ModelMapper mapper;
+    private final static List<StatusOfApplications> FIND_STATUSES_FOR_ADMIN = List.of(
+            StatusOfApplications.SENT, StatusOfApplications.ACCEPTED, StatusOfApplications.REJECTED);
 
     @Override
     @PreAuthorize("hasAuthority('USER')")
@@ -79,7 +81,7 @@ public class ApplicationServiceImpl implements ApplicationService {
             throw new StatusException(
                     "Установить статус " + StatusOfApplications.ACCEPTED + " возможно только для заявки," +
                             " имеющей статус " + StatusOfApplications.SENT + ". Заявка с id = " + applicationId +
-                    " имеет статус отличный от " + StatusOfApplications.SENT);
+                            " имеет статус отличный от " + StatusOfApplications.SENT);
         }
         return applicationRepository.save(application);
     }
@@ -120,12 +122,27 @@ public class ApplicationServiceImpl implements ApplicationService {
     @PreAuthorize("hasAuthority('OPERATOR')")
     public List<Application> getSentApplications(String text, int page, int size, Sort.Direction sort) {
         List<Application> sentApplicationsList =
-                applicationRepository.findAllByStatusAndNameContainsIgnoreCase(StatusOfApplications.SENT, text,
+                applicationRepository.findAllByStatusInAndNameContainsIgnoreCase(
+                        List.of(StatusOfApplications.SENT), text,
                         PageRequest.of(page, size, Sort.by(sort, "createDate")));
         if (sentApplicationsList.isEmpty()) {
             throw new NotFoundException("Заявки со статусом " + StatusOfApplications.SENT + " отсутствуют");
         }
         return sentApplicationsList;
+    }
+
+    @Override
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    public List<Application> getAllApplications(
+            List<StatusOfApplications> statuses, String text, int page, int size, Sort.Direction sort) {
+
+        if (!FIND_STATUSES_FOR_ADMIN.containsAll(statuses)) {
+            throw new IllegalArgumentException("Поиск доступен только по статусам " + FIND_STATUSES_FOR_ADMIN);
+        }
+        List<StatusOfApplications> statusesForFind = statuses.isEmpty() ? FIND_STATUSES_FOR_ADMIN : statuses;
+
+        return applicationRepository.findAllByStatusInAndNameContainsIgnoreCase(statusesForFind, text,
+                PageRequest.of(page, size, Sort.by(sort, "createDate")));
     }
 
     private Integer getUserIdFromPrincipal(Principal principal) {

@@ -2,6 +2,7 @@ package dev.sosnovsky.applications.controller;
 
 import dev.sosnovsky.applications.dto.CreateApplicationDto;
 import dev.sosnovsky.applications.model.Application;
+import dev.sosnovsky.applications.model.StatusOfApplications;
 import dev.sosnovsky.applications.service.ApplicationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -62,6 +63,16 @@ public class ApplicationController {
             @RequestParam(value = "page", required = false, defaultValue = "0") int page,
             @RequestParam(value = "size", required = false, defaultValue = "5") int size) {
         return applicationService.getSentApplications(text, page, size, sort);
+    }
+
+    @GetMapping("/all")
+    public List<Application> getAllApplications(
+            @RequestParam(value = "statuses", required = false) List<StatusOfApplications> statuses,
+            @RequestParam(value = "text", required = false, defaultValue = "") String text,
+            @RequestParam(value = "sort", required = false, defaultValue = "DESC") Sort.Direction sort,
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "5") int size) {
+        return applicationService.getAllApplications(statuses == null ? List.of() : statuses, text, page, size, sort);
     }
 
 }

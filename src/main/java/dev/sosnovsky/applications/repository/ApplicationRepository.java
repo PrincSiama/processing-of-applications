@@ -10,6 +10,8 @@ import java.util.List;
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
     List<Application> findAllByCreatorsId(int creatorsId, Pageable pageable);
 
-    List<Application> findAllByStatusAndNameContainsIgnoreCase(StatusOfApplications status, String text, Pageable pageable);
+    List<Application> findAllByStatusInAndNameContainsIgnoreCase(List<StatusOfApplications> statuses, String text,
+                                                                 Pageable pageable);
+
 }
 

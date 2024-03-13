@@ -7,7 +7,6 @@ import dev.sosnovsky.applications.dto.UserDto;
 import dev.sosnovsky.applications.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +18,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest jwtRequest) {
+    public JwtResponse login(@RequestBody JwtRequest jwtRequest) {
         return userService.login(jwtRequest);
     }
 
     @PostMapping("/token")
-    public ResponseEntity<JwtResponse> getNewAccessToken(@RequestBody RefreshTokenDto request) {
+    public JwtResponse getNewAccessToken(@RequestBody RefreshTokenDto request) {
         return userService.getNewAccessToken(request.getRefreshToken());
     }
 
@@ -39,18 +38,4 @@ public class UserController {
     public UserDto setOperatorRole(@PathVariable int userId) {
         return userService.setOperatorRole(userId);
     }
-
-    // User, Operator, Administrator
-    /*@PutMapping("/login")
-    // выдать токен
-    public void login() {
-
-    }*/
-
-    // User, Operator, Administrator
-   /* @PutMapping("/logout")
-    public void logOut() {
-
-    }*/
-
 }

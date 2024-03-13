@@ -12,21 +12,27 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class JwtTokenUtils {
-    private final String accessSecret = "applicationsapplicationsmoreapplications";
-    private final String refreshSecret = "itisarefrashSecretTokenForMyapplication";
+    private final SecretKey accessKey;
+    private final SecretKey refreshKey;
+    private final int jwtAccessLifeTime;
+    private final int jwtRefreshLifeTime;
 
-    @Value("${jwt.access.lifetime}")
-    private int jwtAccessLifeTime;
-    @Value("${jwt.refresh.lifetime}")
-    private int jwtRefreshLifeTime;
-
-
-    private final SecretKey accessKey = Keys.hmacShaKeyFor(accessSecret.getBytes(StandardCharsets.UTF_8));
-    private final SecretKey refreshKey = Keys.hmacShaKeyFor(refreshSecret.getBytes(StandardCharsets.UTF_8));
+    public JwtTokenUtils(@Value("${jwt.access.secret}") String accessSecret,
+                         @Value("${jwt.refresh.secret}") String refreshSecret,
+                         @Value("${jwt.access.lifetime}") int jwtAccessLifeTime,
+                         @Value("${jwt.refresh.lifetime}") int jwtRefreshLifeTime) {
+        this.accessKey = Keys.hmacShaKeyFor(accessSecret.getBytes(StandardCharsets.UTF_8));
+        this.refreshKey = Keys.hmacShaKeyFor(refreshSecret.getBytes(StandardCharsets.UTF_8));
+        this.jwtAccessLifeTime = jwtAccessLifeTime;
+        this.jwtRefreshLifeTime = jwtRefreshLifeTime;
+    }
 
     public String generateAccessToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
@@ -68,7 +74,7 @@ public class JwtTokenUtils {
 
     public List<String> getRolesFromAccessToken(@NotNull String token) {
         return getClaimsFromToken(token, accessKey).get("roles", List.class);
-                //.stream().map(role -> role.);
+        //.stream().map(role -> role.);
     /*private static Set<Role> getRoles(Claims claims) {
         final List<String> roles = claims.get("roles", List.class);
         return roles.stream()

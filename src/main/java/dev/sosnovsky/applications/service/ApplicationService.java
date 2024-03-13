@@ -2,6 +2,7 @@ package dev.sosnovsky.applications.service;
 
 import dev.sosnovsky.applications.dto.CreateApplicationDto;
 import dev.sosnovsky.applications.model.Application;
+import dev.sosnovsky.applications.model.StatusOfApplications;
 import org.springframework.data.domain.Sort;
 
 import java.security.Principal;
@@ -21,4 +22,6 @@ public interface ApplicationService {
     List<Application> getUserApplications(int page, int size, Sort.Direction sort, Principal principal);
 
     List<Application> getSentApplications(String findText, int page, int size, Sort.Direction sort);
+
+    List<Application> getAllApplications(List<StatusOfApplications> statuses, String text, int page, int size, Sort.Direction sort);
 }

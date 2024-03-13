@@ -13,7 +13,6 @@ import dev.sosnovsky.applications.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -35,7 +34,7 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper mapper;
 
     @Override
-    public ResponseEntity<JwtResponse> login(JwtRequest jwtRequest) {
+    public JwtResponse login(JwtRequest jwtRequest) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -46,14 +45,14 @@ public class UserServiceImpl implements UserService {
         UserDetails userDetails = userDetailsService.loadUserByUsername(jwtRequest.getUserName());
         String accessToken = jwtTokenUtils.generateAccessToken(userDetails);
         String refreshToken = jwtTokenUtils.generateRefreshToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(accessToken, refreshToken));
+        return new JwtResponse(accessToken, refreshToken);
     }
 
-    public ResponseEntity<JwtResponse> getNewAccessToken(String refreshToken) {
+    public JwtResponse getNewAccessToken(String refreshToken) {
         String refreshUserName = jwtTokenUtils.getUserNameFromRefreshToken(refreshToken);
         UserDetails userDetails = userDetailsService.loadUserByUsername(refreshUserName);
         String accessToken = jwtTokenUtils.generateAccessToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(accessToken, null));
+        return new JwtResponse(accessToken, null);
     }
 
     @Override
