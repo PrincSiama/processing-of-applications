@@ -34,9 +34,8 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManager authenticationManager;
     private final ModelMapper mapper;
 
-//    @PreAuthorize("permitAll()")
     @Override
-    public ResponseEntity<JwtResponse> createAuthToken(JwtRequest jwtRequest) {
+    public ResponseEntity<JwtResponse> login(JwtRequest jwtRequest) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -45,8 +44,16 @@ public class UserServiceImpl implements UserService {
             throw new LoginOrPasswordException("Неправильный логин или пароль");
         }
         UserDetails userDetails = userDetailsService.loadUserByUsername(jwtRequest.getUserName());
-        String token = jwtTokenUtils.generateAccessToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token));
+        String accessToken = jwtTokenUtils.generateAccessToken(userDetails);
+        String refreshToken = jwtTokenUtils.generateRefreshToken(userDetails);
+        return ResponseEntity.ok(new JwtResponse(accessToken, refreshToken));
+    }
+
+    public ResponseEntity<JwtResponse> getNewAccessToken(String refreshToken) {
+        String refreshUserName = jwtTokenUtils.getUserNameFromRefreshToken(refreshToken);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(refreshUserName);
+        String accessToken = jwtTokenUtils.generateAccessToken(userDetails);
+        return ResponseEntity.ok(new JwtResponse(accessToken, null));
     }
 
     @Override

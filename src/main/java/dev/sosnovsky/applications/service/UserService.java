@@ -9,7 +9,8 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface UserService {
-    ResponseEntity<JwtResponse> createAuthToken(JwtRequest jwtRequest);
+    ResponseEntity<JwtResponse> login(JwtRequest jwtRequest);
+    ResponseEntity<JwtResponse> getNewAccessToken(String refreshToken);
     List<UserDto> getUsers(Pageable pageable);
     UserDto setOperatorRole(int id);
 

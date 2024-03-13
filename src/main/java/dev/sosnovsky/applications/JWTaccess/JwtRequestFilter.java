@@ -33,7 +33,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             jwt = authHeader.substring(7);
 
             try {
-                userName = jwtTokenUtils.getUserName(jwt);
+                userName = jwtTokenUtils.getUserNameFromAccessToken(jwt);
             } catch (ExpiredJwtException e) {
                 throw new TokenException("Время жизни токена истекло");
             }
@@ -41,7 +41,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                         userName,
                         null,
-                        jwtTokenUtils.getRoles(jwt).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
+                        jwtTokenUtils.getRolesFromAccessToken(jwt).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
                 );
                 token.setDetails(new WebAuthenticationDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(token);

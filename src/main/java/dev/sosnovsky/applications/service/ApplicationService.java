@@ -3,7 +3,6 @@ package dev.sosnovsky.applications.service;
 import dev.sosnovsky.applications.dto.CreateApplicationDto;
 import dev.sosnovsky.applications.model.Application;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Principal;
 import java.util.List;

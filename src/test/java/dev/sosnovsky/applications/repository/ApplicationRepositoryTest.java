@@ -7,6 +7,7 @@ import dev.sosnovsky.applications.model.StatusOfApplications;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 public class ApplicationRepositoryTest {
+    @Autowired
     private ApplicationRepository applicationRepository;
     private final ModelMapper mapper = new ModelMapper();
 

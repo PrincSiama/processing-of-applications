@@ -2,19 +2,12 @@ package dev.sosnovsky.applications.controller;
 
 import dev.sosnovsky.applications.JWTaccess.JwtRequest;
 import dev.sosnovsky.applications.JWTaccess.JwtResponse;
-import dev.sosnovsky.applications.JWTaccess.JwtTokenUtils;
+import dev.sosnovsky.applications.dto.RefreshTokenDto;
 import dev.sosnovsky.applications.dto.UserDto;
-import dev.sosnovsky.applications.exception.LoginOrPasswordException;
 import dev.sosnovsky.applications.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +19,13 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> createAuthToken(@RequestBody JwtRequest jwtRequest) {
-        return userService.createAuthToken(jwtRequest);
+    public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest jwtRequest) {
+        return userService.login(jwtRequest);
+    }
+
+    @PostMapping("/token")
+    public ResponseEntity<JwtResponse> getNewAccessToken(@RequestBody RefreshTokenDto request) {
+        return userService.getNewAccessToken(request.getRefreshToken());
     }
 
     @GetMapping

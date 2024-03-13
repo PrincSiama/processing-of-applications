@@ -17,7 +17,7 @@ import java.util.*;
 @Component
 public class JwtTokenUtils {
     private final String accessSecret = "applicationsapplicationsmoreapplications";
-    private final String refreshSecret = UUID.randomUUID().toString();
+    private final String refreshSecret = "itisarefrashSecretTokenForMyapplication";
 
     @Value("${jwt.access.lifetime}")
     private int jwtAccessLifeTime;
@@ -46,12 +46,28 @@ public class JwtTokenUtils {
                 .compact();
     }
 
-    public String getUserName(@NotNull String token) {
-        return getClaimsFromToken(token).getSubject();
+    public String generateRefreshToken(UserDetails userDetails) {
+        Date issuedDate = new Date();
+        Date expiredDate = new Date(issuedDate.getTime() + Duration.ofMinutes(jwtRefreshLifeTime).toMillis());
+
+        return Jwts.builder()
+                .subject(userDetails.getUsername())
+                .issuedAt(issuedDate)
+                .expiration(expiredDate)
+                .signWith(refreshKey)
+                .compact();
     }
 
-    public List<String> getRoles(@NotNull String token) {
-        return getClaimsFromToken(token).get("roles", List.class);
+    public String getUserNameFromAccessToken(@NotNull String token) {
+        return getClaimsFromToken(token, accessKey).getSubject();
+    }
+
+    public String getUserNameFromRefreshToken(@NotNull String token) {
+        return getClaimsFromToken(token, refreshKey).getSubject();
+    }
+
+    public List<String> getRolesFromAccessToken(@NotNull String token) {
+        return getClaimsFromToken(token, accessKey).get("roles", List.class);
                 //.stream().map(role -> role.);
     /*private static Set<Role> getRoles(Claims claims) {
         final List<String> roles = claims.get("roles", List.class);
@@ -60,9 +76,9 @@ public class JwtTokenUtils {
                 .collect(Collectors.toSet());*/
     }
 
-    public Claims getClaimsFromToken(@NotNull String token) {
+    public Claims getClaimsFromToken(@NotNull String token, SecretKey key) {
         return Jwts.parser()
-                .verifyWith(accessKey)
+                .verifyWith(key)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
