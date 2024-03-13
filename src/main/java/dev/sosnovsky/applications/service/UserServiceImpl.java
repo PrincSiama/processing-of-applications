@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
             throw new LoginOrPasswordException("Неправильный логин или пароль");
         }
         UserDetails userDetails = userDetailsService.loadUserByUsername(jwtRequest.getUserName());
-        String token = jwtTokenUtils.generateToken(userDetails);
+        String token = jwtTokenUtils.generateAccessToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
     }
 

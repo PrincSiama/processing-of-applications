@@ -1,69 +1,48 @@
 package dev.sosnovsky.applications.JWTaccess;
 
-import dev.sosnovsky.applications.model.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import org.springframework.lang.NonNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.encrypt.AesBytesEncryptor;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
-import java.security.Signature;
-import java.security.interfaces.DSAKey;
-import java.security.spec.EncodedKeySpec;
-import java.security.spec.InvalidKeySpecException;
 import java.time.Duration;
 import java.util.*;
 
-import static io.jsonwebtoken.Jwts.SIG.HS256;
-
 @Component
-@AllArgsConstructor
 public class JwtTokenUtils {
-//    @Value("${jwt.jwt.secret.access}")
-    private final String secret = "applicationsapplicationsmoreapplications";
+    private final String accessSecret = "applicationsapplicationsmoreapplications";
+    private final String refreshSecret = UUID.randomUUID().toString();
 
-//    @Value("${jwt.access.lifetime}")
-    private final Duration jwtLifeTime = Duration.ofMinutes(60);
+    @Value("${jwt.access.lifetime}")
+    private int jwtAccessLifeTime;
+    @Value("${jwt.refresh.lifetime}")
+    private int jwtRefreshLifeTime;
 
-    private final SecretKey key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-    // "AES" or "RSA"
-//    private final SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "AES");
 
-   /* SecretKey key = generateKey(256);
+    private final SecretKey accessKey = Keys.hmacShaKeyFor(accessSecret.getBytes(StandardCharsets.UTF_8));
+    private final SecretKey refreshKey = Keys.hmacShaKeyFor(refreshSecret.getBytes(StandardCharsets.UTF_8));
 
-    public static SecretKey generateKey(int n) throws NoSuchAlgorithmException {
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-        keyGenerator.init(n);
-        return keyGenerator.generateKey();
-    }*/
-
-    public String generateToken(UserDetails userDetails) {
+    public String generateAccessToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         List<String> rolesList = userDetails
                 .getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
         claims.put("roles", rolesList);
 
         Date issuedDate = new Date();
-        Date expiredDate = new Date(issuedDate.getTime() + jwtLifeTime.toMillis());
+        Date expiredDate = new Date(issuedDate.getTime() + Duration.ofMinutes(jwtAccessLifeTime).toMillis());
 
         return Jwts.builder()
                 .claims(claims)
                 .subject(userDetails.getUsername())
                 .issuedAt(issuedDate)
                 .expiration(expiredDate)
-                .signWith(key)
+                .signWith(accessKey)
                 .compact();
     }
 
@@ -83,7 +62,7 @@ public class JwtTokenUtils {
 
     public Claims getClaimsFromToken(@NotNull String token) {
         return Jwts.parser()
-                .verifyWith(key)
+                .verifyWith(accessKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();

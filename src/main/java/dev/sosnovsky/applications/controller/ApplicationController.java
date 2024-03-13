@@ -6,10 +6,12 @@ import dev.sosnovsky.applications.service.ApplicationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -20,21 +22,21 @@ public class ApplicationController {
 
     @PostMapping
     public Application createApplication(@RequestBody @Valid CreateApplicationDto createApplicationDto,
-                                         @AuthenticationPrincipal UserDetails userDetails) {
-        return applicationService.create(createApplicationDto, userDetails);
+                                         Principal principal) {
+        return applicationService.create(createApplicationDto, principal);
     }
 
     @PutMapping("/{applicationId}")
     public Application updateApplication(@PathVariable int applicationId,
                                          @RequestBody @Valid CreateApplicationDto createApplicationDto,
-                                         @AuthenticationPrincipal UserDetails userDetails) {
-        return applicationService.update(applicationId, createApplicationDto, userDetails);
+                                         Principal principal) {
+        return applicationService.update(applicationId, createApplicationDto, principal);
     }
 
     @PutMapping("/{applicationId}/send")
     public Application sendApplication(@PathVariable int applicationId,
-                                       @AuthenticationPrincipal UserDetails userDetails) {
-        return applicationService.send(applicationId, userDetails);
+                                       Principal principal) {
+        return applicationService.send(applicationId, principal);
     }
 
     @PutMapping("/{applicationId}/accept")
@@ -52,8 +54,8 @@ public class ApplicationController {
             @RequestParam(value = "sort", required = false, defaultValue = "DESC") Sort.Direction sort,
             @RequestParam(value = "page", required = false, defaultValue = "0") int page,
             @RequestParam(value = "size", required = false, defaultValue = "5") int size,
-            @AuthenticationPrincipal UserDetails userDetails) {
-        return applicationService.getUserApplications(page, size, sort, userDetails);
+            Principal principal) {
+        return applicationService.getUserApplications(page, size, sort, principal);
     }
 
     @GetMapping("/sent")

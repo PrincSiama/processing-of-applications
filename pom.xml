@@ -57,7 +57,7 @@
 			<version>${jsonwebtoken.version}</version>
 		</dependency>
 
-		<!--<dependency>
+		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
 			<version>${jsonwebtoken.version}</version>
@@ -75,7 +75,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>jakarta.xml.bind</groupId>
 			<artifactId>jakarta.xml.bind-api</artifactId>
 			<version>${jakarta.xml.bind-api.version}</version>

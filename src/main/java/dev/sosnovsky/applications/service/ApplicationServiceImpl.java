@@ -17,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,20 +30,21 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     @PreAuthorize("hasAuthority('USER')")
-    public Application create(CreateApplicationDto createApplicationDto, UserDetails userDetails) {
+    public Application create(CreateApplicationDto createApplicationDto, Principal principal) {
+
         Application application = mapper.map(createApplicationDto, Application.class);
         application.setStatus(StatusOfApplications.DRAFT);
-        application.setCreatorsId(getUserIdFromUserDetails(userDetails));
+        application.setCreatorsId(getUserIdFromPrincipal(principal));
         application.setCreateDate(LocalDateTime.now());
         return applicationRepository.save(application);
     }
 
     @Override
     @PreAuthorize("hasAuthority('USER')")
-    public Application update(int applicationId, CreateApplicationDto createApplicationDto, UserDetails userDetails) {
+    public Application update(int applicationId, CreateApplicationDto createApplicationDto, Principal principal) {
         Application application = applicationRepository.findById(applicationId).orElseThrow(
                 () -> new NotFoundException("Заявка с id = " + applicationId + " не найдена"));
-        int userId = getUserIdFromUserDetails(userDetails);
+        int userId = getUserIdFromPrincipal(principal);
         if (application.getCreatorsId() != userId) {
             throw new NotCreatorException("Пользователь с id = " + userId + " не является создателем заявки с id = "
                     + applicationId + ". Обновление заявки невозможно");
@@ -55,10 +57,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     @PreAuthorize("hasAuthority('USER')")
-    public Application send(int applicationId, UserDetails userDetails) {
+    public Application send(int applicationId, Principal principal) {
         Application application = applicationRepository.findById(applicationId).orElseThrow(
                 () -> new NotFoundException("Заявка с id = " + applicationId + " не найдена"));
-        int userId = getUserIdFromUserDetails(userDetails);
+        int userId = getUserIdFromPrincipal(principal);
         if (application.getCreatorsId() != userId) {
             throw new NotCreatorException("Пользователь с id = " + userId + " не является создателем заявки с id = "
                     + applicationId + ". Отправка заявки невозможна");
@@ -103,8 +105,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     @PreAuthorize("hasAuthority('USER')")
-    public List<Application> getUserApplications(int page, int size, Sort.Direction sort, UserDetails userDetails) {
-        int userId = getUserIdFromUserDetails(userDetails);
+    public List<Application> getUserApplications(int page, int size, Sort.Direction sort, Principal principal) {
+        int userId = getUserIdFromPrincipal(principal);
         List<Application> userApplicationsList =
                 applicationRepository.findAllByCreatorsId(userId,
                         PageRequest.of(page, size, Sort.by(sort, "createDate")));
@@ -127,8 +129,8 @@ public class ApplicationServiceImpl implements ApplicationService {
         return sentApplicationsList;
     }
 
-    private Integer getUserIdFromUserDetails(UserDetails userDetails) {
-        String phoneNumber = userDetails.getUsername();
+    private Integer getUserIdFromPrincipal(Principal principal) {
+        String phoneNumber = principal.getName();
         User user = userRepository.findAllByPhoneNumber(phoneNumber)
                 .orElseThrow(() -> new NotFoundException("Пользователь с номером телефона " + phoneNumber
                         + " не найден"));
