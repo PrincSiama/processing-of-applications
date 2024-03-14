@@ -14,7 +14,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUpI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM0NjU2MSwiZXhwIjoxNzEwMzQ2NjIxfQ.krLM2CzigKCOPmt_Wa3elS9LQjXmPW4UfQsRV_6bKnw",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM5ODkzMCwiZXhwIjoxNzEwMzk5MjMwfQ.Zh0zQdPa11heIDjP3ibrbLg_UEPGa6Wdk9RISf1XAqQ",
 							"type": "string"
 						}
 					]
@@ -23,7 +23,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"description\": \"user1 description\",\r\n    \"name\": \"user1\",\r\n    \"phoneNumber\": \"+79154561246\"\r\n}",
+					"raw": "{\r\n    \"description\": \"user1 description2\",\r\n    \"name\": \"user1\",\r\n    \"phoneNumber\": \"+79154561246\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -86,7 +86,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIrNzEyMzQ1Njc4OTAiLCJpYXQiOjE3MTAzNTE4MjksImV4cCI6MTcxMjk0MzgyOX0.AXepQxyoQUKVopWgi7N68spn4VQn3D6ILENqPYzOs0g\"\r\n}",
+					"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIrNzEyMzQ1Njc4OTAiLCJpYXQiOjE3MTAzOTg5MzAsImV4cCI6MTcxMjk5MDkzMH0.0oa6dsgoPQQ0sf36g_amVwed0Mn8YXHDTFZM5e4LiWM\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -138,7 +138,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM1MjU4OCwiZXhwIjoxNzEwMzUyODg4fQ.YqfybMJzz85H3jjMc2sEyuVsx3zZr50ctDQfqAhFE7I",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM5ODkzMCwiZXhwIjoxNzEwMzk5MjMwfQ.Zh0zQdPa11heIDjP3ibrbLg_UEPGa6Wdk9RISf1XAqQ",
 							"type": "string"
 						}
 					]
@@ -177,7 +177,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM1MTgyOSwiZXhwIjoxNzEwMzUyMTI5fQ.QsgVafE4THt7oFOQeyYwwXKVUBtv4J1RiMg5FyFC8p4",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM5OTI1NSwiZXhwIjoxNzEwMzk5NTU1fQ.uX4JtzUKMBsuBw8zKplyMDdBv4A2lVtre8kfEH1eEHk",
 							"type": "string"
 						}
 					]
@@ -185,7 +185,7 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/application/10/send",
+					"raw": "http://localhost:8080/application/2/send",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -193,7 +193,7 @@
 					"port": "8080",
 					"path": [
 						"application",
-						"10",
+						"2",
 						"send"
 					]
 				}
@@ -354,6 +354,38 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"+74567890123\",\r\n    \"password\": \"password4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Operator refresh",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
 					"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIrNzQ1Njc4OTAxMjMiLCJpYXQiOjE3MTAzNTE1OTgsImV4cCI6MTcxMjk0MzU5OH0.-thp4X-D9WFO3SsBFn1gL8KJroHjDMaqE73jAMezZVs\"\r\n}",
 					"options": {
 						"raw": {
@@ -422,7 +454,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJBRE1JTklTVFJBVE9SIiwiT1BFUkFUT1IiXSwic3ViIjoiKzc1Njc4OTAxMjM0IiwiaWF0IjoxNzEwMzUxOTY1LCJleHAiOjE3MTAzNTIyNjV9.N4Cb4m37AuksW3ANB_kf6Slm35dUy3roZvec4jmzAiw",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJPUEVSQVRPUiJdLCJzdWIiOiIrNzQ1Njc4OTAxMjMiLCJpYXQiOjE3MTAzOTkxNzQsImV4cCI6MTcxMDM5OTQ3NH0.QXMNyprWCoe1yo-zbm3KyVR7CBcBOttbLyo3LTfIHbA",
 							"type": "string"
 						}
 					]
@@ -430,7 +462,7 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/application/5/accept",
+					"raw": "http://localhost:8080/application/1/accept",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -438,7 +470,7 @@
 					"port": "8080",
 					"path": [
 						"application",
-						"5",
+						"1",
 						"accept"
 					]
 				}
@@ -453,7 +485,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJBRE1JTklTVFJBVE9SIiwiT1BFUkFUT1IiXSwic3ViIjoiKzc1Njc4OTAxMjM0IiwiaWF0IjoxNzEwMzUxOTY1LCJleHAiOjE3MTAzNTIyNjV9.N4Cb4m37AuksW3ANB_kf6Slm35dUy3roZvec4jmzAiw",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJPUEVSQVRPUiJdLCJzdWIiOiIrNzQ1Njc4OTAxMjMiLCJpYXQiOjE3MTAzOTkxNzQsImV4cCI6MTcxMDM5OTQ3NH0.QXMNyprWCoe1yo-zbm3KyVR7CBcBOttbLyo3LTfIHbA",
 							"type": "string"
 						}
 					]
@@ -461,7 +493,7 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/application/6/reject",
+					"raw": "http://localhost:8080/application/2/reject",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -469,7 +501,7 @@
 					"port": "8080",
 					"path": [
 						"application",
-						"6",
+						"2",
 						"reject"
 					]
 				}
@@ -755,61 +787,6 @@
 			"response": []
 		},
 		{
-			"name": "Admin get app",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJBRE1JTklTVFJBVE9SIiwiT1BFUkFUT1IiXSwic3ViIjoiKzc1Njc4OTAxMjM0IiwiaWF0IjoxNzEwMzU2Mjk4LCJleHAiOjE3MTAzNTY1OTh9.jNgpSuijG6olI-FYTuvaWaoE-KwSuGnNlh1CAUd64jY",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/application/all?status=REJECTED&sort=ASC",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"application",
-						"all"
-					],
-					"query": [
-						{
-							"key": "status",
-							"value": "REJECTED"
-						},
-						{
-							"key": "text",
-							"value": "uS",
-							"disabled": true
-						},
-						{
-							"key": "page",
-							"value": "0",
-							"disabled": true
-						},
-						{
-							"key": "size",
-							"value": "2",
-							"disabled": true
-						},
-						{
-							"key": "sort",
-							"value": "ASC"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "user1 get users",
 			"request": {
 				"auth": {
@@ -843,6 +820,10 @@
 		{
 			"key": "baseUrl",
 			"value": "http://localhost:8080/"
+		},
+		{
+			"key": "statuses",
+			"value": ""
 		}
 	]
 }

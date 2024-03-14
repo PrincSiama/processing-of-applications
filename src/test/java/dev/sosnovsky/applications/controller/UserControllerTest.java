@@ -1,87 +1,110 @@
 package dev.sosnovsky.applications.controller;
 
-import dev.sosnovsky.applications.config.SecurityConfig;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.sosnovsky.applications.JWTaccess.JwtRequest;
+import dev.sosnovsky.applications.JWTaccess.JwtResponse;
+import dev.sosnovsky.applications.JWTaccess.JwtTokenUtils;
 import dev.sosnovsky.applications.model.Role;
-import dev.sosnovsky.applications.service.ApplicationService;
-import dev.sosnovsky.applications.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.test.web.servlet.MvcResult;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@SpringBootTest
-//@AutoConfigureMockMvc
-//@ContextConfiguration(classes = SecurityConfig.class)
-@WebMvcTest(UserController.class)
-@Import(SecurityConfig.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class UserControllerTest {
     @Autowired
     MockMvc mockMvc;
-    @MockBean
-    private ApplicationService applicationService;
-    @MockBean
-    private UserService userService;
     @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    /*@BeforeEach
-    void setUp(ApplicationContext applicationContext) {
-        this.mockMvc = applicationContext.getBean(MockMvc.class);
-    }*/
+    private JwtTokenUtils jwtTokenUtils;
+    @Autowired
+    private ObjectMapper objectMapper;
+    @Mock
+    private UserDetails userDetails;
 
     @Test
+    @DisplayName("Успешное создание токена")
     void createAuthToken() throws Exception {
-        mockMvc.perform(
-                        get("/user/login"))
-                .andExpect(status().isOk());
+        MvcResult mvcResult = mockMvc.perform(post("/user/login")
+                        .content(objectMapper.writeValueAsString(
+                                new JwtRequest("+71234567890", "password1")))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
 
-        mockMvc.perform(get("/user/login")
-                        .with(
-                                user("+71234567890")
-                                        .password("$2a$10$NAktC/XBl.16hEtLkkdkyuwcTUqbjhHaLelARpHF8hVrVFk16zuse")
-                                        .roles(Role.USER.name())))
-                .andExpect(status().isOk());
+        JwtResponse response = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), JwtResponse.class);
+        assertFalse(response.getAccessToken().isBlank());
+        assertFalse(response.getRefreshToken().isBlank());
     }
 
     @Test
-    @WithMockUser(roles = "ADMINISTRATOR")
     @DisplayName("Запрос списка пользователей пользователем с ролью ADMINISTRATOR")
     void getUsersWithRoleAdmin() throws Exception {
-        mockMvc.perform(get("/user")).andExpect(status().isOk());
+        when(userDetails.getUsername()).thenReturn("Admin");
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(Role.ADMINISTRATOR.name());
+        when(userDetails.getAuthorities()).thenAnswer(invocationOnMock -> List.of(grantedAuthority));
+        String token = jwtTokenUtils.generateAccessToken(userDetails);
+        mockMvc.perform(get("/user")
+                .header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk());
     }
 
     @Test
-    @WithAnonymousUser()
     @DisplayName("Запрос списка пользователей пользователем с ролью USER")
     void getUsersWithRoleUser() throws Exception {
-        mockMvc.perform(get("/user")).andExpect(status().isForbidden());
+        when(userDetails.getUsername()).thenReturn("User");
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(Role.USER.name());
+        when(userDetails.getAuthorities()).thenAnswer(invocationOnMock -> List.of(grantedAuthority));
+        String token = jwtTokenUtils.generateAccessToken(userDetails);
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", "Bearer " + token))
+                .andExpect(status().isForbidden());
     }
 
     @Test
-    @WithMockUser(roles = "ADMINISTRATOR")
     @DisplayName("Назначение роли оператора пользователем с ролью ADMINISTRATOR")
     void setOperatorRoleWithRoleAdmin() throws Exception {
-        mockMvc.perform(put("/user/1/set-role")).andExpect(status().isOk());
+        when(userDetails.getUsername()).thenReturn("Admin");
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(Role.ADMINISTRATOR.name());
+        when(userDetails.getAuthorities()).thenAnswer(invocationOnMock -> List.of(grantedAuthority));
+        String token = jwtTokenUtils.generateAccessToken(userDetails);
+
+        mockMvc.perform(put("/user/1/set-role")
+                .header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk());
     }
 
     @Test
-    @WithMockUser
     @DisplayName("Назначение роли оператора пользователем с ролью USER")
     void setOperatorRoleWithRoleUser() throws Exception {
-        mockMvc.perform(put("/user/1/set-role")).andExpect(status().isForbidden());
-    }
+        when(userDetails.getUsername()).thenReturn("User");
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(Role.USER.name());
+        when(userDetails.getAuthorities()).thenAnswer(invocationOnMock -> List.of(grantedAuthority));
+        String token = jwtTokenUtils.generateAccessToken(userDetails);
 
+        mockMvc.perform(put("/user/1/set-role")
+                .header("Authorization", "Bearer " + token))
+                .andExpect(status().isForbidden());
+    }
 }
