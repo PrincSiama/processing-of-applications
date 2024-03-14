@@ -1,4 +1,4 @@
-package dev.sosnovsky.applications.JWTaccess;
+package dev.sosnovsky.applications.Jwt;
 
 import dev.sosnovsky.applications.exception.TokenException;
 import io.jsonwebtoken.ExpiredJwtException;

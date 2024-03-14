@@ -1,7 +1,7 @@
 package dev.sosnovsky.applications.controller;
 
-import dev.sosnovsky.applications.JWTaccess.JwtRequest;
-import dev.sosnovsky.applications.JWTaccess.JwtResponse;
+import dev.sosnovsky.applications.Jwt.JwtRequest;
+import dev.sosnovsky.applications.Jwt.JwtResponse;
 import dev.sosnovsky.applications.dto.RefreshTokenDto;
 import dev.sosnovsky.applications.dto.UserDto;
 import dev.sosnovsky.applications.service.UserService;

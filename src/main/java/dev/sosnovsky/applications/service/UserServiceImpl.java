@@ -1,8 +1,8 @@
 package dev.sosnovsky.applications.service;
 
-import dev.sosnovsky.applications.JWTaccess.JwtRequest;
-import dev.sosnovsky.applications.JWTaccess.JwtResponse;
-import dev.sosnovsky.applications.JWTaccess.JwtTokenUtils;
+import dev.sosnovsky.applications.Jwt.JwtRequest;
+import dev.sosnovsky.applications.Jwt.JwtResponse;
+import dev.sosnovsky.applications.Jwt.JwtTokenUtils;
 import dev.sosnovsky.applications.dto.UserDto;
 import dev.sosnovsky.applications.exception.LoginOrPasswordException;
 import dev.sosnovsky.applications.exception.NotFoundException;

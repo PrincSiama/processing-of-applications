@@ -1,7 +1,7 @@
 package dev.sosnovsky.applications.service;
 
-import dev.sosnovsky.applications.JWTaccess.JwtRequest;
-import dev.sosnovsky.applications.JWTaccess.JwtResponse;
+import dev.sosnovsky.applications.Jwt.JwtRequest;
+import dev.sosnovsky.applications.Jwt.JwtResponse;
 import dev.sosnovsky.applications.dto.UserDto;
 import org.springframework.data.domain.Pageable;
 

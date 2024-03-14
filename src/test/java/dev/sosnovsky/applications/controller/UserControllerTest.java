@@ -1,9 +1,9 @@
 package dev.sosnovsky.applications.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.sosnovsky.applications.JWTaccess.JwtRequest;
-import dev.sosnovsky.applications.JWTaccess.JwtResponse;
-import dev.sosnovsky.applications.JWTaccess.JwtTokenUtils;
+import dev.sosnovsky.applications.Jwt.JwtRequest;
+import dev.sosnovsky.applications.Jwt.JwtResponse;
+import dev.sosnovsky.applications.Jwt.JwtTokenUtils;
 import dev.sosnovsky.applications.model.Role;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

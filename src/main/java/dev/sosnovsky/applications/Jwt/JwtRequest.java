@@ -1,4 +1,4 @@
-package dev.sosnovsky.applications.JWTaccess;
+package dev.sosnovsky.applications.Jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

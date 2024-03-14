@@ -1,4 +1,4 @@
-package dev.sosnovsky.applications.JWTaccess;
+package dev.sosnovsky.applications.Jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -74,12 +74,6 @@ public class JwtTokenUtils {
 
     public List<String> getRolesFromAccessToken(@NotNull String token) {
         return getClaimsFromToken(token, accessKey).get("roles", List.class);
-        //.stream().map(role -> role.);
-    /*private static Set<Role> getRoles(Claims claims) {
-        final List<String> roles = claims.get("roles", List.class);
-        return roles.stream()
-                .map(Role::valueOf)
-                .collect(Collectors.toSet());*/
     }
 
     public Claims getClaimsFromToken(@NotNull String token, SecretKey key) {

@@ -1,6 +1,6 @@
 package dev.sosnovsky.applications.service;
 
-import dev.sosnovsky.applications.JWTaccess.JwtTokenUtils;
+import dev.sosnovsky.applications.Jwt.JwtTokenUtils;
 import dev.sosnovsky.applications.dto.UserDto;
 import dev.sosnovsky.applications.model.Role;
 import dev.sosnovsky.applications.model.User;
@@ -12,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

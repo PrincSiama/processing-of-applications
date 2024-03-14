@@ -1,6 +1,6 @@
 package dev.sosnovsky.applications.config;
 
-import dev.sosnovsky.applications.JWTaccess.JwtRequestFilter;
+import dev.sosnovsky.applications.Jwt.JwtRequestFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
