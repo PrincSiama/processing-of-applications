@@ -29,3 +29,19 @@ databaseChangeLog:
             separator: ;
             file: data/v2_add_roles.csv
             relativeToChangelogFile: true
+  - changeSet:
+      id: 4
+      author: dev.sosnovsky
+      changes:
+        - sqlFile:
+            dbms: postgresql, h2
+            path: v2/v2_create_table.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 5
+      author: dev.sosnovsky
+      changes:
+        - sqlFile:
+            dbms: postgresql, h2
+            path: v3/v3_setval_sequence.sql
+            relativeToChangelogFile: true

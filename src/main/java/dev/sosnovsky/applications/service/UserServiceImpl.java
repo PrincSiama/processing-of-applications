@@ -3,13 +3,16 @@ package dev.sosnovsky.applications.service;
 import dev.sosnovsky.applications.Jwt.JwtRequest;
 import dev.sosnovsky.applications.Jwt.JwtResponse;
 import dev.sosnovsky.applications.Jwt.JwtTokenUtils;
+import dev.sosnovsky.applications.dto.CreateUserDto;
 import dev.sosnovsky.applications.dto.UserDto;
 import dev.sosnovsky.applications.exception.LoginOrPasswordException;
 import dev.sosnovsky.applications.exception.NotFoundException;
 import dev.sosnovsky.applications.exception.RoleAlreadyExistsException;
+import dev.sosnovsky.applications.model.PhoneDetails;
 import dev.sosnovsky.applications.model.Role;
 import dev.sosnovsky.applications.model.User;
 import dev.sosnovsky.applications.repository.UserRepository;
+import jakarta.annotation.security.PermitAll;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
@@ -19,19 +22,36 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final PhoneDetailsService phoneDetailsService;
     private final UserDetailsService userDetailsService;
     private final JwtTokenUtils jwtTokenUtils;
     private final AuthenticationManager authenticationManager;
     private final ModelMapper mapper;
+    private final PasswordEncoder passwordEncoder;
+
+    @Override
+    @PermitAll
+    @Transactional
+    public UserDto createUser(CreateUserDto createUserDto) {
+        PhoneDetails phoneDetails = phoneDetailsService.getPhoneDatailsFromDaData(createUserDto.getPhoneNumber());
+        User user = mapper.map(createUserDto, User.class);
+        user.setPhoneDetails(phoneDetails);
+        user.setRole(Set.of(Role.USER));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return mapper.map(userRepository.save(user), UserDto.class);
+    }
 
     @Override
     public JwtResponse login(JwtRequest jwtRequest) {

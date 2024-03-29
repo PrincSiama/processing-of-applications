@@ -36,7 +36,7 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/user/login")
                         .permitAll())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/login", "/user/token").permitAll()
+                        .requestMatchers("user/create", "/user/login", "/user/token").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

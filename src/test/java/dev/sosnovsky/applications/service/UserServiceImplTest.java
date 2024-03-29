@@ -4,6 +4,7 @@ import dev.sosnovsky.applications.Jwt.JwtTokenUtils;
 import dev.sosnovsky.applications.dto.UserDto;
 import dev.sosnovsky.applications.model.Role;
 import dev.sosnovsky.applications.model.User;
+import dev.sosnovsky.applications.repository.PhoneDetailsRepository;
 import dev.sosnovsky.applications.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +19,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.HashSet;
 import java.util.List;
@@ -40,12 +43,16 @@ class UserServiceImplTest {
     @Mock
     private JwtTokenUtils jwtTokenUtils;
     @Mock
+    private PhoneDetailsService phoneDetailsService;
+    @Mock
     private AuthenticationManager authenticationManager;
     private final ModelMapper mapper = new ModelMapper();
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
    @BeforeEach
    void setUp() {
-       userService = new UserServiceImpl(userRepository, userDetailsService, jwtTokenUtils, authenticationManager, mapper);
+       userService = new UserServiceImpl(userRepository, phoneDetailsService,
+               userDetailsService, jwtTokenUtils, authenticationManager, mapper, passwordEncoder);
    }
 
     @Test

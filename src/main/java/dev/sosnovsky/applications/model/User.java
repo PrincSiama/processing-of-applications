@@ -18,6 +18,10 @@ public class User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id")
+    private PhoneDetails phoneDetails;
+
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
