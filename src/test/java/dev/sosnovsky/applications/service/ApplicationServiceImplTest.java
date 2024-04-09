@@ -36,11 +36,14 @@ class ApplicationServiceImplTest {
     @Mock
     private ApplicationRepository applicationRepository;
     @Mock
+    PhoneDetailsService phoneDetailsService;
+    @Mock
     private UserRepository userRepository;
 
     @BeforeEach
     void setUp() {
-        applicationService = new ApplicationServiceImpl(applicationRepository, userRepository, new ModelMapper());
+        applicationService = new ApplicationServiceImpl(applicationRepository, phoneDetailsService,
+                userRepository, new ModelMapper());
     }
 
     @Test

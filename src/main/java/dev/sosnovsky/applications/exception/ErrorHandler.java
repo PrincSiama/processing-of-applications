@@ -1,5 +1,6 @@
 package dev.sosnovsky.applications.exception;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -56,5 +57,19 @@ public class ErrorHandler {
     public ErrorResponse handleTokenException(TokenException e) {
         e.printStackTrace();
         return new ErrorResponse("Токен некорректен", e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+        e.printStackTrace();
+        return new ErrorResponse("Нарушение уникальности", e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleIncorrectPhoneException(IncorrectPhoneException e) {
+        e.printStackTrace();
+        return new ErrorResponse("Введён некорректный номер телефона", e.getMessage());
     }
 }

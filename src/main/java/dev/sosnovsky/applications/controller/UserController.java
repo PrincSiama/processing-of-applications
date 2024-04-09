@@ -5,7 +5,6 @@ import dev.sosnovsky.applications.Jwt.JwtResponse;
 import dev.sosnovsky.applications.dto.CreateUserDto;
 import dev.sosnovsky.applications.dto.RefreshTokenDto;
 import dev.sosnovsky.applications.dto.UserDto;
-import dev.sosnovsky.applications.model.User;
 import dev.sosnovsky.applications.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

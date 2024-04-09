@@ -1,6 +1,7 @@
 package dev.sosnovsky.applications.service;
 
 import dev.sosnovsky.applications.dto.CreateApplicationDto;
+import dev.sosnovsky.applications.exception.IncorrectPhoneException;
 import dev.sosnovsky.applications.exception.NotCreatorException;
 import dev.sosnovsky.applications.exception.NotFoundException;
 import dev.sosnovsky.applications.exception.StatusException;
@@ -24,6 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationRepository applicationRepository;
+    private final PhoneDetailsService phoneDetailsService;
     private final UserRepository userRepository;
     private final ModelMapper mapper;
     private final static List<StatusOfApplications> FIND_STATUSES_FOR_ADMIN = List.of(
@@ -32,7 +34,9 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     @PreAuthorize("hasAuthority('USER')")
     public Application create(CreateApplicationDto createApplicationDto, Principal principal) {
-
+        if (!phoneDetailsService.isCorrectPhone(createApplicationDto.getPhoneNumber())) {
+            throw new IncorrectPhoneException("Указанный телефон отсутствует в базе сервиса DaData");
+        }
         Application application = mapper.map(createApplicationDto, Application.class);
         application.setStatus(StatusOfApplications.DRAFT);
         application.setCreatorsId(getUserIdFromPrincipal(principal));
