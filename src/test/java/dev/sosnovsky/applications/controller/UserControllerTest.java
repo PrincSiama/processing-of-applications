@@ -63,7 +63,7 @@ class UserControllerTest {
         when(userDetails.getAuthorities()).thenAnswer(invocationOnMock -> List.of(grantedAuthority));
         String token = jwtTokenUtils.generateAccessToken(userDetails);
         mockMvc.perform(get("/user")
-                .header("Authorization", "Bearer " + token))
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
     }
 
@@ -76,7 +76,7 @@ class UserControllerTest {
         String token = jwtTokenUtils.generateAccessToken(userDetails);
 
         mockMvc.perform(get("/user")
-                .header("Authorization", "Bearer " + token))
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isForbidden());
     }
 
@@ -89,7 +89,7 @@ class UserControllerTest {
         String token = jwtTokenUtils.generateAccessToken(userDetails);
 
         mockMvc.perform(put("/user/1/set-role")
-                .header("Authorization", "Bearer " + token))
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
     }
 
@@ -102,7 +102,7 @@ class UserControllerTest {
         String token = jwtTokenUtils.generateAccessToken(userDetails);
 
         mockMvc.perform(put("/user/1/set-role")
-                .header("Authorization", "Bearer " + token))
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isForbidden());
     }
 }

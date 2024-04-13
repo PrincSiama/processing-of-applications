@@ -4,7 +4,7 @@ databaseChangeLog:
       author: dev.sosnovsky
       changes:
         - sqlFile:
-            dbms: postgresql
+            dbms: h2
             path: v1/v1_create_table.sql
             relativeToChangelogFile: true
   - changeSet:
@@ -34,7 +34,7 @@ databaseChangeLog:
       author: dev.sosnovsky
       changes:
         - sqlFile:
-            dbms: postgresql
+            dbms: h2
             path: v2/v2_create_table.sql
             relativeToChangelogFile: true
   - changeSet:
@@ -42,6 +42,6 @@ databaseChangeLog:
       author: dev.sosnovsky
       changes:
         - sqlFile:
-            dbms: postgresql
+            dbms: h2
             path: v3/v3_setval_sequence.sql
             relativeToChangelogFile: true

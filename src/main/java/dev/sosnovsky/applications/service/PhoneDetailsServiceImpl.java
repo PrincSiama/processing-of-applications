@@ -16,21 +16,22 @@ import java.util.List;
 public class PhoneDetailsServiceImpl implements PhoneDetailsService {
     private final PhoneDetailsRepository phoneDetailsRepository;
     private final DaDataClient daDataClient;
+    private final String apiKey;
+    private final String secretKey;
 
     @Autowired
-    public PhoneDetailsServiceImpl(PhoneDetailsRepository phoneDetailsRepository, DaDataClient daDataClient) {
+    public PhoneDetailsServiceImpl(PhoneDetailsRepository phoneDetailsRepository, DaDataClient daDataClient,
+                                   @Value("${dadata.api-key}") String apiKey,
+                                   @Value("${dadata.secret-key}") String secretKey) {
         this.phoneDetailsRepository = phoneDetailsRepository;
         this.daDataClient = daDataClient;
+        this.apiKey = apiKey;
+        this.secretKey = secretKey;
     }
-
-    @Value("${dadata.api-key}")
-    private String apiKey;
-    @Value("${dadata.secret-key}")
-    private String secretKey;
 
     @Override
     @PermitAll
-    public PhoneDetails getPhoneDatailsFromDaData(String phone) {
+    public PhoneDetails getPhoneDetailsFromDaData(String phone) {
         PhoneDetails phoneDetails = daDataClient
                 .getPhoneDatailsFromDaData(List.of(phone), apiKey, secretKey)
                 .getBody().get(0);

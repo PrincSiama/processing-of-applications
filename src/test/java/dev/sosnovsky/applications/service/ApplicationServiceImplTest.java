@@ -51,8 +51,8 @@ class ApplicationServiceImplTest {
     void createTest() {
         int testUserId = 16;
         CreateApplicationDto createApplicationDto1 = new CreateApplicationDto(
-                "Test Description 1", "Test Name 1", "+71238904432");
-        Principal principal = () -> "+71239547226";
+                "Test Description 1", "Test Name 1", "+79094513816");
+        Principal principal = () -> "+79604043599";
 
         User testUser = new User();
         testUser.setId(testUserId);
@@ -60,6 +60,7 @@ class ApplicationServiceImplTest {
         when(userRepository.findAllByPhoneNumber(principal.getName())).thenReturn(Optional.of(testUser));
         when(applicationRepository.save(any(Application.class)))
                 .thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0, Application.class));
+        when(phoneDetailsService.isCorrectPhone(anyString())).thenReturn(true);
 
         Application application = applicationService.create(createApplicationDto1, principal);
 

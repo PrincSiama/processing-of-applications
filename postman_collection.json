@@ -7,6 +7,44 @@
 	},
 	"item": [
 		{
+			"name": "anonymous create user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM5ODkzMCwiZXhwIjoxNzEwMzk5MjMwfQ.Zh0zQdPa11heIDjP3ibrbLg_UEPGa6Wdk9RISf1XAqQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"user1 description2\",\r\n    \"name\": \"user1\",\r\n    \"phoneNumber\": \"+79154561246\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/application",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "User1 create app",
 			"request": {
 				"auth": {
@@ -734,7 +772,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJBRE1JTklTVFJBVE9SIiwiT1BFUkFUT1IiXSwic3ViIjoiKzc1Njc4OTAxMjM0IiwiaWF0IjoxNzEwMzUxOTY1LCJleHAiOjE3MTAzNTIyNjV9.N4Cb4m37AuksW3ANB_kf6Slm35dUy3roZvec4jmzAiw",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJBRE1JTklTVFJBVE9SIiwiT1BFUkFUT1IiXSwic3ViIjoiKzc1Njc4OTAxMjM0IiwiaWF0IjoxNzExNzEyODQ4LCJleHAiOjE3MTE3MTMxNDh9.CxWQ0uxTqNDet39ztejIRAQA5yoG_1O3j3lnrbPJvxs",
 							"type": "string"
 						}
 					]
@@ -742,7 +780,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/user",
+					"raw": "http://localhost:8080/user?size=10",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -750,6 +788,12 @@
 					"port": "8080",
 					"path": [
 						"user"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "10"
+						}
 					]
 				}
 			},
@@ -810,6 +854,54 @@
 					"port": "8080",
 					"path": [
 						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Проверка телефона",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token 4b6dde3871df8781f73d596974944eecfbccc9f0",
+						"type": "text"
+					},
+					{
+						"key": "X-Secret",
+						"value": "80c644455d80ed3dd09ea2c6fc03abc3b8dbce5f",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[ \"+79237694899\" ]"
+				},
+				"url": {
+					"raw": "https://cleaner.dadata.ru/api/v1/clean/phone",
+					"protocol": "https",
+					"host": [
+						"cleaner",
+						"dadata",
+						"ru"
+					],
+					"path": [
+						"api",
+						"v1",
+						"clean",
+						"phone"
 					]
 				}
 			},

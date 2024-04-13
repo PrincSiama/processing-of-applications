@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @PermitAll
     @Transactional
     public UserDto createUser(CreateUserDto createUserDto) {
-        PhoneDetails phoneDetails = phoneDetailsService.getPhoneDatailsFromDaData(createUserDto.getPhoneNumber());
+        PhoneDetails phoneDetails = phoneDetailsService.getPhoneDetailsFromDaData(createUserDto.getPhoneNumber());
         User user = mapper.map(createUserDto, User.class);
         user.setPhoneDetails(phoneDetails);
         user.setRole(Set.of(Role.USER));
