@@ -14,7 +14,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInN1YiI6Iis3MTIzNDU2Nzg5MCIsImlhdCI6MTcxMDM5ODkzMCwiZXhwIjoxNzEwMzk5MjMwfQ.Zh0zQdPa11heIDjP3ibrbLg_UEPGa6Wdk9RISf1XAqQ",
+							"value": "",
 							"type": "string"
 						}
 					]
@@ -23,7 +23,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"description\": \"user1 description2\",\r\n    \"name\": \"user1\",\r\n    \"phoneNumber\": \"+79154561246\"\r\n}",
+					"raw": "{\r\n    \"name\": \"user1\",\r\n    \"phoneNumber\": \"+79154561245\",\r\n    \"password\": \"password1\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -31,14 +31,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/application",
+					"raw": "http://localhost:8080/user/create",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"application"
+						"user",
+						"create"
 					]
 				}
 			},
